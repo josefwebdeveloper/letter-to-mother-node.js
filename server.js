@@ -23,7 +23,7 @@ app.use('/timer', require('./timer/timer.controller'));
 // global error handler
 
 app.use(errorHandler);
-timerService.create();
+// timerService.create().then(r => r);
 // start server
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 const server = app.listen(port, function () {
