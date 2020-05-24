@@ -14,6 +14,7 @@ function jwt() {
             '/users',
             '/article/create',
             '/article',
+            '/article/getNext/*',
             '/article/random',
             '/timer',
             '/timer/create',

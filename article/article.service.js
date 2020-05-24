@@ -7,7 +7,9 @@ const Article = db.Article;
 module.exports = {
     getAll,
     getById,
+    getFirst,
     create,
+    getNext,
     getRandom
 };
 
@@ -22,11 +24,22 @@ async function getById(id) {
     return await Article.findById(id);
 }
 
+async function getNext(curId) {
+    console.log('getNext');
+    console.log(curId);
+
+    return await Article.find({_id: {$gt: curId}}).sort({_id: 1}).limit(1);
+}
+
+async function getFirst() {
+    console.log('getFirst');
+    return Article.findOne();
+}
+
 async function getRandom() {
     console.log('getRandom');
     return await Article.aggregate([{$sample: {size: 1}}]);
 }
-
 
 async function create(articleParam) {
 

@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // use JWT auth to secure the api
-app.use(jwt());
+// app.use(jwt());s
 
 // api routes
 app.use('/users', require('./users/users.controller'));

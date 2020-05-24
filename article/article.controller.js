@@ -8,6 +8,8 @@ const timerService = require('../timer/timer.service');
 router.get('/', getAll);
 router.post('/create', create);
 router.get('/random', getRandom);
+router.get('/getNext/:id', getNext);
+router.get('/getFirst/', getFirst);
 router.get('/:articleId', getById);
 // router.put('/:articleId', updateById);
 // router.delete('/:articleId', deleteById);
@@ -26,6 +28,19 @@ module.exports = router;
 //     });
 // }
 
+function getNext(req, res, next) {
+    console.log('getNext contr');
+    articleService.getNext(req.params.id)
+        .then(article => {
+            if (article.length ===0) {
+                console.log(article, 'w[qqq]');
+                articleService.getFirst()
+                    .then(article => article ? res.json({data: {article: article}}) : res.sendStatus(404))
+            } else {
+            article ? res.json({data: {article: article}}) : res.sendStatus(404);}
+        })
+        .catch(err => next(err));
+}
 
 function getRandom(req, res, next) {
     console.log('getRandom contr');
@@ -33,11 +48,23 @@ function getRandom(req, res, next) {
         .then(article => article ? res.json({data: {article: article}}) : res.sendStatus(404))
         .catch(err => next(err));
 }
-function getById(req, res, next) {
-    articleService.getById(req.params.id)
+
+function getFirst(req, res, next) {
+    console.log('getFirst contr');
+    articleService.getFirst()
         .then(article => article ? res.json({data: {article: article}}) : res.sendStatus(404))
         .catch(err => next(err));
 }
+
+function getById(req, res, next) {
+    articleService.getById(req.params.id)
+        .then(article => {
+            console.log(article, 'w');
+            return article ? res.json({data: {article: article}}) : res.sendStatus(404);
+        })
+        .catch(err => next(err));
+}
+
 function getAll(req, res, next) {
     console.log('getRandom contr');
 
@@ -45,6 +72,7 @@ function getAll(req, res, next) {
         .then(articles => res.json({status: 'success', message: 'Articles found!!!', data: {articles: articles}}))
         .catch(err => next(err));
 }
+
 // function getAll(req, res, next) {
 //     let articleList = [];
 //
@@ -74,7 +102,6 @@ function getAll(req, res, next) {
 // }
 
 
-
 // function deleteById(req, res, next) {
 //     articleModel.findByIdAndRemove(req.params.movieId, function (err, movieInfo) {
 //         if (err)
@@ -85,12 +112,13 @@ function getAll(req, res, next) {
 //     });
 // }
 function create(req, res, next) {
-    timerService.create().then(()=>res.json({status: 'success', message: 'Timer added successfully!!!', data: null}))
+    timerService.create().then(() => res.json({status: 'success', message: 'Timer added successfully!!!', data: null}))
         .catch(err => next(err));
     articleService.create(req.body)
         .then(() => res.json({status: 'success', message: 'Article added successfully!!!', data: null}))
         .catch(err => next(err));
 }
+
 // function create(req, res, next) {
 //     articleModel.create({name: req.body.name, released_on: req.body.released_on}, function (err, result) {
 //         if (err)
