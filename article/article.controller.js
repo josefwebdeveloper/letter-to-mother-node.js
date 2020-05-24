@@ -35,7 +35,7 @@ function getNext(req, res, next) {
             if (article.length ===0) {
                 console.log(article, 'w[qqq]');
                 articleService.getFirst()
-                    .then(article => article ? res.json({data: {article: article}}) : res.sendStatus(404))
+                    .then(article => article ? res.json({data: {article: [article]}}) : res.sendStatus(404))
             } else {
             article ? res.json({data: {article: article}}) : res.sendStatus(404);}
         })
