@@ -1,6 +1,5 @@
 ﻿{
-    "connectionString": "mongodb://josef:josef1900@ds157064.mlab.com:57064/letter-to-mama",
+    "connectionString": "mongodb+srv://josef:josef1900@letter-to-mama.mtvpc.mongodb.net/letter-to-mama?retryWrites=true&w=majority",
     "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
 }
-
 
